@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { calcButtons } from '../../services/buttons.js'
 import Button from '../Button/Button.jsx';
 import Display from '../Display/Display.jsx';
 import './Calculator.css'
 
-function Calculator() {
-    const calcButtons = [['AC', 'triple'], ['/'], ['7'], ['8'], ['9'], ['*'], ['4'], ['5'], ['6'], ['-'], ['1'], ['2'], ['3'], ['+'], ['0', 'double'], ['.'], ['=']];
 
-    const buttonRender = calcButtons.map((label) => {
-        if(label.length < 2) return <Button value={label}/>
-        else {
-            if(label[1] === 'triple') return <Button value={label[0]} className="triple" />
-            else return <Button value={label[0]} className="double" />
-        }
+function Calculator() {
+    const [displayValue, setDisplayValue] = useState("")
+
+    const buttonRender = calcButtons.map(item => {
+        return <Button 
+            value={item.name} 
+            className={item.size} 
+            onClick={item.function}
+        />
     })
 
     return (
         <div className="calculator">
-            <Display />
+            <Display>{displayValue}</Display>
             <div className="buttons-container">
                 {buttonRender}
             </div>
